@@ -78,9 +78,11 @@ Select from the menu below:
 You have selected a Rectangle
 
 What is the length?
+
 4
 
 What is the Width?
+
 9.5
 
 The area of the Rectangle is 38.
@@ -104,5 +106,7 @@ Select from the menu below:
 8. Construct a Cylinder
 9. Construct a Torus
 10. Exit the program
+    
 10
+
 Thanks for using the program. Today is Nov 11 at 1:40 PM.
