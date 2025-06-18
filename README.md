@@ -74,16 +74,25 @@ Select from the menu below:
 10. Exit the program
 
 2
+
 You have selected a Rectangle
+
 What is the length?
 4
+
 What is the Width?
 9.5
+
 The area of the Rectangle is 38.
+
 Would you like to continue? (Y or N)
+
 3
+
 Sorry I do not understand. Enter Y or N
+
 Y
+
 Select from the menu below:
 1. Construct a Circle
 2. Construct a Rectangle
