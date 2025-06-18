@@ -1,9 +1,4 @@
-/**
- * The ShapesController class manages the interaction between the user interface and the application logic.
- * It handles user input from the ComboBox and TextFields, validates data, instantiates the appropriate shape objects,
- * calculates geometric properties (like area and volume), and displays results in the GUI.
- * It also updates the associated shape image dynamically based on user input.
- */
+// This class will control how the app responds when the user interacts with the GUI
 
 package com.example.cmsc_335_shapes;
 
@@ -36,6 +31,7 @@ public class ShapesController {
     private ComboBox<String> shapeSelector;  // This links to ComboBox in the FXML for Shapes
 
 
+
     @FXML
     public void initialize() {    // This gets called when the app starts
         shapeSelector.setPromptText("Select a shape");  // This sets the text shown on the selection drop box
@@ -57,14 +53,14 @@ public class ShapesController {
                 radiusField.setPromptText("Radius");
                 inputContainer.getChildren().addAll(radiusLabel, radiusField);
 
-                //     SQUARE
+            //     SQUARE
             } else if (selectedShape.equals("Square")) {
                 Label lengthLabel = new Label("Enter length");
                 lengthField = new TextField();
                 lengthField.setPromptText("Length");
                 inputContainer.getChildren().addAll(lengthLabel, lengthField);
 
-                //     RECTANGLE
+            //     RECTANGLE
             } else if (selectedShape.equals("Rectangle")) {
                 Label lengthLabel = new Label("Enter length:");
                 lengthField = new TextField();
@@ -76,7 +72,7 @@ public class ShapesController {
 
                 inputContainer.getChildren().addAll(lengthLabel, lengthField, widthLabel, widthField);
 
-                //     TRIANGLE
+            //     TRIANGLE
             } else if (selectedShape.equals("Triangle")) {
                 Label baseLabel = new Label("Enter base:");
                 baseField = new TextField();
@@ -142,7 +138,6 @@ public class ShapesController {
             }
         });
     }
-
     @FXML
     protected void onCalculateButtonClick() {   // Prompts calculation, shape display
         String selectedShape = shapeSelector.getValue();
@@ -155,20 +150,16 @@ public class ShapesController {
                     calculateText.setText("Radius must be a positive number.");
                     return;
                 }
-
-
                 Circle circle = new Circle(radius);
                 calculateText.setText(circle.getFormattedResults());
 
-                double scaleFactor = Math.min(1.0, radius / 8.0); // scale between 0.0 and 1.0
-                setShapeImage("circle.jpg", scaleFactor);
+                shapeImageView.setImage(new Image(getClass().getResource("/com/example/cmsc_335_shapes/images/circle.jpg").toExternalForm()));
 
 
             } catch (NumberFormatException e) {
                 calculateText.setText("Please enter a valid number for radius.");
             }
         }
-
 
         //  SQUARE
         else if ("Square".equals(selectedShape)) {
@@ -178,13 +169,10 @@ public class ShapesController {
                     calculateText.setText("Length must be a positive number.");
                     return;
                 }
-
-
                 Square square = new Square(length);
                 calculateText.setText(square.getFormattedResults());
 
-                double scaleFactor = Math.min(1.0, length / 8.0);
-                setShapeImage("square.jpg", scaleFactor);
+                updateImageForShape(selectedShape);
 
 
             } catch (NumberFormatException e) {
@@ -207,13 +195,10 @@ public class ShapesController {
                     return;
                 }
 
-
                 Rectangle rectangle = new Rectangle(length, width);
                 calculateText.setText(rectangle.getFormattedResults());
 
-                double maxSide = Math.max(length, width);
-                double scaleFactor = Math.min(1.0, maxSide / 8.0);
-                setShapeImage("rectangle.jpg", scaleFactor);
+                updateImageForShape(selectedShape);
 
 
             } catch (NumberFormatException e) {
@@ -236,13 +221,10 @@ public class ShapesController {
                     return;
                 }
 
-
                 Triangle triangle = new Triangle(base, height);
                 calculateText.setText(triangle.getFormattedResults());
 
-                double maxSide = Math.max(base, height);
-                double scaleFactor = Math.min(1.0, maxSide / 8.0);
-                setShapeImage("triangle.jpg", scaleFactor);
+                updateImageForShape(selectedShape);
 
 
             } catch (NumberFormatException e) {
@@ -375,34 +357,27 @@ public class ShapesController {
             }
         }
     }
-
-
-    private void setShapeImage(String imageFileName, double scaleFactor) {
+    private void setShapeImage(String imageFileName) {
         try {
-            Image image = new Image(getClass().getResource("/com/example/cmsc_335_shapes/images/" + imageFileName).toExternalForm());
-            shapeImageView.setImage(image);
-            shapeImageView.setFitWidth(200 * scaleFactor); // 200 is your base max width
+            shapeImageView.setImage(new Image(getClass().getResource("/com/example/cmsc_335_shapes/images/" + imageFileName).toExternalForm()));
         } catch (Exception e) {
-            shapeImageView.setImage(null);
+            shapeImageView.setImage(null); // fallback
             System.out.println("Image not found: " + imageFileName);
         }
     }
-
-
     // Determine which shape image should be shown
     private void updateImageForShape(String shapeName) {
         switch (shapeName) {
-            case "Circle" -> setShapeImage("circle.jpg", 1.0);
-            case "Square" -> setShapeImage("square.jpg", 1.0);
-            case "Rectangle" -> setShapeImage("rectangle.jpg", 1.0);
-            case "Triangle" -> setShapeImage("triangle.jpg", 1.0);
-            case "Cone" -> setShapeImage("cone.jpg", 1.0);
-            case "Cube" -> setShapeImage("cube.jpg", 1.0);
-            case "Cylinder" -> setShapeImage("cylinder.jpg", 1.0);
-            case "Sphere" -> setShapeImage("sphere.jpg", 1.0);
-            case "Torus" -> setShapeImage("torus.jpg", 1.0);
+            case "Circle" -> setShapeImage("circle.jpg");
+            case "Square" -> setShapeImage("square.jpg");
+            case "Rectangle" -> setShapeImage("rectangle.jpg");
+            case "Triangle" -> setShapeImage("triangle.jpg");
+            case "Cone" -> setShapeImage("cone.jpg");
+            case "Cube" -> setShapeImage("cube.jpg");
+            case "Cylinder" -> setShapeImage("cylinder.jpg");
+            case "Sphere" -> setShapeImage("sphere.jpg");
+            case "Torus" -> setShapeImage("torus.jpg");
             default -> shapeImageView.setImage(null); // Fallback image or none
-
         }
     }
 }
